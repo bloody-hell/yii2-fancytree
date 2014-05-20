@@ -18,7 +18,7 @@ class BootstrapAsset extends Asset
     {
         parent::init();
 
-        $this->depends = CoreAsset::className();
+        $this->depends[] = CoreAsset::className();
     }
 
 } 
