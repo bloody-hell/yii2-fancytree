@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "2.0.0-beta",
+        "yiisoft/yii2": "*",
         "mar10/fancytree": "2.0"
     },
     "repositories" : [
