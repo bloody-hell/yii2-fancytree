@@ -3,6 +3,7 @@
 namespace bloody_hell\yii2_fancytree;
 
 use bloody_hell\yii2_fancytree\skins\Bootstrap;
+use bloody_hell\yii2_fancytree\tree\INode;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -10,7 +11,7 @@ use yii\web\JsExpression;
 class FancyTree extends \yii\base\Widget
 {
     /**
-     * @var array
+     * @var INode[]
      */
     public $source;
 
