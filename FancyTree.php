@@ -2,6 +2,7 @@
 
 namespace bloody_hell\yii2_fancytree;
 
+use bloody_hell\yii2_fancytree\skins\Bootstrap;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -32,14 +33,27 @@ class FancyTree extends \yii\base\Widget
 
     public $clientOptions = [];
 
+    public $extensions = [];
+
+    /**
+     * @var string|ISkin
+     */
+    public $skin = 'bootstrap';
+
     public function init()
     {
         parent::init();
-        Asset::register($this->view);
+        CoreAsset::register($this->view);
         if(isset($this->options['id']) && !$this->getId(false)){
             $this->setId($this->options['id']);
         } else {
             $this->options['id'] = $this->getId();
+        }
+        if(! $this->skin instanceof ISkin){
+            $this->skin = static::generateSkin($this->skin);
+        }
+        foreach($this->skin->getAssetBundles() as $skin){
+            $skin::register($this->view);
         }
     }
 
@@ -66,6 +80,30 @@ class FancyTree extends \yii\base\Widget
             $options['lazyLoad'] = $this->lazyLoad;
         }
 
+        $options['extensions'] = [];
+
+        foreach(array_merge($this->skin->getExtensions(), $this->extensions) as $extension => $params){
+            $options['extensions'][] = $extension;
+            $options[$extension] = $params;
+        }
+
         return $options;
     }
-} 
+
+    /**
+     * @param $skin
+     *
+     * @return ISkin
+     *
+     * @throws \InvalidArgumentException
+     */
+    private static function generateSkin($skin)
+    {
+        switch($skin){
+            case 'bootstrap':
+                $skin = new Bootstrap();
+                return $skin;
+        }
+        throw new \InvalidArgumentException('Unknown skin');
+    }
+}
