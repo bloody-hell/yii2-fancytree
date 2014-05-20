@@ -48,6 +48,30 @@ abstract class BaseNode implements INode
     private $_extra_classes = [];
 
     /**
+     * @var INode
+     */
+    private $_parent;
+
+    /**
+     * @param INode $parent
+     *
+     * @return $this
+     */
+    public function setParent(INode $parent)
+    {
+        $this->_parent = $parent;
+        return $this;
+    }
+
+    /**
+     * @return INode
+     */
+    public function getParent()
+    {
+        return $this->_parent;
+    }
+
+    /**
      * @param boolean $is_active
      */
     public function setIsActive($is_active)
@@ -246,5 +270,10 @@ abstract class BaseNode implements INode
         }
 
         return $json;
+    }
+
+    public function __construct($title)
+    {
+        $this->setTitle($title);
     }
 }

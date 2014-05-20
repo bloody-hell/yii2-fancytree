@@ -47,6 +47,7 @@ class Folder extends BaseFolder
         $this->_children = [];
         foreach($children as $child){
             $this->addChild($child);
+            $child->setParent($this);
         }
         return $this;
     }

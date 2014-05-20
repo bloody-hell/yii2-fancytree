@@ -70,4 +70,16 @@ interface INode extends \JsonSerializable
      * @return string[]
      */
     public function getExtraClasses();
+
+    /**
+     * @return INode
+     */
+    public function getParent();
+
+    /**
+     * @param INode $node
+     *
+     * @return $this
+     */
+    public function setParent(INode $node);
 } 
