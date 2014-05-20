@@ -68,7 +68,7 @@ class FancyTree extends \yii\base\Widget
 
     protected function generateOptions()
     {
-        $options = $this->clientOptions;
+        $options = array_merge($this->skin->getExtraOptions(), $this->clientOptions);
 
         if($this->sourceUrl){
             $options['source'] = Url::toRoute($this->sourceUrl);
