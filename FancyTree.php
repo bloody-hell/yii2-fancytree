@@ -5,6 +5,7 @@ namespace bloody_hell\yii2_fancytree;
 use bloody_hell\yii2_fancytree\skins\Bootstrap;
 use bloody_hell\yii2_fancytree\tree\INode;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
@@ -34,6 +35,9 @@ class FancyTree extends \yii\base\Widget
 
     public $clientOptions = [];
 
+    /**
+     * @var IExtension[]
+     */
     public $extensions = [];
 
     /**
@@ -53,8 +57,14 @@ class FancyTree extends \yii\base\Widget
         if(! $this->skin instanceof ISkin){
             $this->skin = static::generateSkin($this->skin);
         }
-        foreach($this->skin->getAssetBundles() as $skin){
-            $skin::register($this->view);
+        $assets = call_user_func_array('array_merge', array_map(function(IExtension $extension){
+                    return $extension->getAssetBundles();
+                }, $this->getExtensions()));
+        if($this->skin){
+            $assets = array_merge($assets, $this->skin->getAssetBundles());
+        }
+        foreach($assets as $assetBundle){
+            $assetBundle::register($this->view);
         }
     }
 
@@ -62,9 +72,21 @@ class FancyTree extends \yii\base\Widget
     {
         parent::run();
 
-        $this->view->registerJs('jQuery(\'#' . $this->getId() . '\').fancytree(' . json_encode($this->generateOptions()). ');');
+        $this->view->registerJs('jQuery(\'#' . $this->getId() . '\').fancytree(' . Json::encode($this->generateOptions()). ');');
 
         return Html::tag('div', '', $this->options);
+    }
+
+    /**
+     * @return IExtension[]
+     */
+    protected function getExtensions()
+    {
+        $extensions = $this->extensions;
+        if($this->skin){
+            $extensions = array_merge($this->skin->getExtensions(), $this->extensions);
+        }
+        return $extensions;
     }
 
     protected function generateOptions()
@@ -83,9 +105,9 @@ class FancyTree extends \yii\base\Widget
 
         $options['extensions'] = [];
 
-        foreach(array_merge($this->skin->getExtensions(), $this->extensions) as $extension => $params){
-            $options['extensions'][] = $extension;
-            $options[$extension] = $params;
+        foreach($this->getExtensions() as $extension){
+            $options['extensions'][] = $extension->getName();
+            $options[$extension->getName()] = $extension->getOptions();
         }
 
         return $options;

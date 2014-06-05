@@ -4,52 +4,25 @@
 namespace bloody_hell\yii2_fancytree\skins;
 
 
-use bloody_hell\yii2_fancytree\ISkin;
+use bloody_hell\yii2_fancytree\BaseSkin;
+use bloody_hell\yii2_fancytree\extensions\Glyph;
 
-class Bootstrap implements ISkin
+class Bootstrap extends BaseSkin
 {
     /**
      * @return string[]
      */
     public function getAssetBundles()
     {
-        return [BootstrapAsset::className()];
+        return [BootstrapAsset::className(),];
     }
 
     /**
-     * @return array
+     * @return \bloody_hell\yii2_fancytree\IExtension[]
      */
     public function getExtensions()
     {
-        return [
-            'glyph' => [
-                'map' => [
-                    'doc'              => 'glyphicon glyphicon-file',
-                    'docOpen'          => 'glyphicon glyphicon-file',
-                    'checkbox'         => 'glyphicon glyphicon-unchecked',
-                    'checkboxSelected' => 'glyphicon glyphicon-check',
-                    'checkboxUnknown'  => 'glyphicon glyphicon-share',
-                    'error'            => 'glyphicon glyphicon-warning-sign',
-                    'expanderClosed'   => 'glyphicon glyphicon-plus-sign',
-                    'expanderLazy'     => 'glyphicon glyphicon-plus-sign',
-                    // 'expanderLazy' => 'glyphicon glyphicon-expand',
-                    'expanderOpen'     => 'glyphicon glyphicon-minus-sign',
-                    // 'expanderOpen' => 'glyphicon glyphicon-collapse-down',
-                    'folder'           => 'glyphicon glyphicon-folder-close',
-                    'folderOpen'       => 'glyphicon glyphicon-folder-open',
-                    'loading'          => 'glyphicon glyphicon-refresh'
-                    // 'loading' => 'icon-spinner icon-spin'
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getExtraOptions()
-    {
-        return [];
+        return [new Glyph()];
     }
 
 } 

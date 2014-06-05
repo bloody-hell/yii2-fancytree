@@ -4,7 +4,7 @@
 namespace bloody_hell\yii2_fancytree;
 
 
-interface ISkin
+interface IExtension
 {
     /**
      * @return string[]
@@ -12,12 +12,12 @@ interface ISkin
     public function getAssetBundles();
 
     /**
-     * @return IExtension[]
+     * @return string
      */
-    public function getExtensions();
+    public function getName();
 
     /**
      * @return array
      */
-    public function getExtraOptions();
+    public function getOptions();
 } 
