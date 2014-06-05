@@ -4,9 +4,10 @@
 namespace bloody_hell\yii2_fancytree;
 
 
+use yii\base\Object;
 use yii\helpers\ArrayHelper;
 
-abstract class BaseExtension implements IExtension
+abstract class BaseExtension extends Object  implements IExtension
 {
     /**
      * @var array
