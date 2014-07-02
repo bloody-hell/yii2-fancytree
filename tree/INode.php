@@ -82,4 +82,9 @@ interface INode extends \JsonSerializable
      * @return $this
      */
     public function setParent(INode $node);
+
+    /**
+     * @return array
+     */
+    public function getData();
 } 

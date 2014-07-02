@@ -53,6 +53,11 @@ abstract class BaseNode implements INode
     private $_parent;
 
     /**
+     * @var array
+     */
+    private $_data = [];
+
+    /**
      * @param INode $parent
      *
      * @return $this
@@ -229,6 +234,21 @@ abstract class BaseNode implements INode
         return $this;
     }
 
+    /**
+     * @param array $data
+     */
+    public function setData(array $data)
+    {
+        $this->_data = $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->_data;
+    }
 
     /**
      * @return string|null
@@ -267,6 +287,10 @@ abstract class BaseNode implements INode
 
         if(null !== $children = $this->getChildren()){
             $json['children'] = $children;
+        }
+
+        if($this->getData()){
+            $json['data'] = $this->getData();
         }
 
         return $json;
