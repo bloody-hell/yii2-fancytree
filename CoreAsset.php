@@ -18,7 +18,7 @@ class CoreAsset extends Asset
     {
         parent::init();
         $this->depends[] = JqueryAsset::className();
-        $this->depends[] = \yii\jui\CoreAsset::className();
+        $this->depends[] = \yii\jui\JuiAsset::className();
     }
 
 } 
