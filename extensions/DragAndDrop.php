@@ -46,10 +46,7 @@ class DragAndDrop extends BaseExtension
 
     public function getAssetBundles()
     {
-        return [
-            DraggableAsset::className(),
-            DroppableAsset::className()
-        ];
+        return [];
     }
 
 
